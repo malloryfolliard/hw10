@@ -3,35 +3,46 @@
 <head>
 	<meta charset="utf-8">
 	<title>API Fun</title>
+	<style type="text/css">
+		
+	</style>
 	<script>
 		function loadData() {
 
 			request = new XMLHttpRequest();
 
-			request.open("GET", "www.thecocktaildb.com/api/json/v1/1/random.php", true);
-			request.send();
-		//	request.onreadystatechange = function() {
-			if (request.readyState == 4 && request.status == 200) {
-				result = request.responseText;
-				random = JSON.parse(result);
+			request.onreadystatechange = function() {
+				if (request.readyState == 4 && request.status == 200) {
+					
+					json = JSON.parse(request.responseText);
+					drink = json.drinks[0];
+					console.log(drink);
 
-				strHTML += random.strDrink + ": </br>" + random.strInstructions;
-				document.getElementById("rand").innerHTML = strHTML;
+					strHTML = drink["strDrink"] + ": </br>" + drink["strInstructions"] + "</br> Ingredients: </br>";
 
-			} else if (request.readyState == 4 && request.status != 200) {
-				document.getElementById("rand").innerHTML = "Request failed!";
-			} else if (request.readyState == 3) {
-				document.getElementById("rand").innerHTML = "Try again.";
+					for (let i = 1; i < 16; i ++) {
+						if (drink["strIngredient"+i] == null) break;
+						else {
+							strHTML += "- " + drink["strIngredient"+i] + "</br>";
+						}
+					}
+
+					document.getElementById("rand").innerHTML = strHTML;
+				}
 			}
+
+			request.open("GET", "https://thecocktaildb.com/api/json/v1/1/random.php", true);
+
+			request.send();
+
 		}
-			
-		//}
+		
 	</script>
 </head>
 <body onload="loadData()">
 	<p> 1. The API that I selected is a datbase with a list of cocktails. A random cocktail is presented below. Displayed is the name of the cocktail and instructions on how to make it. </p>
 	<p> 2. This API can be found at the site <a href="https://www.thecocktaildb.com/api.php" target ="_blank"> here. </a> </p>
-	<p> 3. The options that I used include ... </p>
+	<p> 3. The options that I used include a simple GET request with no API keys required. The true means that the code will keep going while the content is loaded. This way the page is responsive while the URL is loaded. </p>
 	<p> 4. Two applications in which this API would be helpful would be (1) if somebody is looking to make a specific drink that is provided in the API and needs instructions and (2) if somebody is looking for a new drink to make and would like a random one generated. </p>
 
 	<div id="rand">&nbsp;</div>
