@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<title>API Fun</title>
 	<style type="text/css">
-		
+		body {background-color: #E7A5C2; font-family: "georgia";}
 	</style>
 	<script>
 		function loadData() {
@@ -18,7 +18,7 @@
 					drink = json.drinks[0];
 					console.log(drink);
 
-					strHTML = drink["strDrink"] + ": </br>" + drink["strInstructions"] + "</br> Ingredients: </br>";
+					strHTML = drink["strDrink"] + ": </br></br>" + drink["strInstructions"] + "</br></br> Ingredients: </br>";
 
 					for (let i = 1; i < 16; i ++) {
 						if (drink["strIngredient"+i] == null) break;
@@ -45,7 +45,7 @@
 	<p> 3. The options that I used include a simple GET request with no API keys required. The true means that the code will keep going while the content is loaded. This way the page is responsive while the URL is loaded. </p>
 	<p> 4. Two applications in which this API would be helpful would be (1) if somebody is looking to make a specific drink that is provided in the API and needs instructions and (2) if somebody is looking for a new drink to make and would like a random one generated. </p>
 
-	<div id="rand">&nbsp;</div>
+	<b><div id="rand">&nbsp;</div></b>
 
 
 </body>
